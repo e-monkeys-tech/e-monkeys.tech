@@ -1,0 +1,18 @@
+FROM alpine:latest
+
+WORKDIR /opt
+
+# need GNU tools and not busybox eponym binaries
+RUN apk update && \
+    apk --no-cache add util-linux pciutils usbutils coreutils binutils findutils \
+    bash git grep wget && \
+    apk --no-cache add zola --repository http://dl-cdn.alpinelinux.org/alpine/edge/community/ && \
+    rm /bin/sh && \
+    ln -s /bin/bash /bin/sh && \
+    mkdir /opt/blog
+
+COPY . /opt/blog
+
+WORKDIR /opt/blog
+
+ENTRYPOINT ["bash"]

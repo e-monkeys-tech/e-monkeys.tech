@@ -1,0 +1,6 @@
+[book]
+authors = ["Pierre Baconnier"]
+language = "en"
+multilingual = false
+src = "src"
+title = "Shell Snippets"

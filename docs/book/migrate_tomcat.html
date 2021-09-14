@@ -1,0 +1,300 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Migrate a Tomcat application - Shell Snippets</title>
+        <!-- Custom HTML head -->
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="migrate_tomcat.html" class="active"><strong aria-hidden="true">1.</strong> Migrate a Tomcat application</a></li><li class="chapter-item expanded "><a href="to_lower.html"><strong aria-hidden="true">2.</strong> To lower function</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Shell Snippets</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="migrate-a-tomcat-application"><a class="header" href="#migrate-a-tomcat-application">Migrate a Tomcat application</a></h1>
+<pre><code class="language-bash"># Globals
+SRC=${1}
+TARGET=${2}
+JAVA_HOME=${3}
+APP_HOME=${4}
+TOMCAT_HOME=${5}
+ENV=${6}
+SSL_HOME=${7}
+
+function init_temp() {
+  mkdir -p /tmp/{java,ssl,tomcat,app}
+  TMP_APP=/tmp/app
+  TMP_JAVA=/tmp/java
+  TMP_SSL=/tmp/ssl
+  TMP_TOMCAT=/tmp/tomcat
+}
+
+# Test de la présence des paramètres
+function start_usage() {
+  if !([ -z ${6+x} ]); then 
+    echo
+  else 
+    echo -e &quot;Ce script prend en arguments positionnels les paramètres suivants : 
+    &lt;SRC&gt; &lt;TARGET&gt; &lt;JAVA_HOME&gt; &lt;APP_HOME&gt; &lt;TOMCAT_HOME&gt; &lt;ENV&gt; &lt;[SSL_HOME]&gt;
+    specimen : #./self.sh s-coca-q-1 s-coca-p-1 /usr/java /usr/local/apps/tomcat /home/tomcat pre /usr/ssl&quot;
+    exit 
+  fi
+}
+
+function src_copy() {
+  ssh root@${TARGET} 'mkdir ${APP_HOME} ${JAVA_HOME} ${SSL_HOME}; useradd tomcat'
+  scp -r  root@${SRC}:${APP_HOME}/* ${TMP_APP}/
+  scp -r  ${TMP_APP}/* root@:${TARGET}/
+  scp -r  root@${SRC}:${JAVA_HOME}/* ${TMP_JAVA}/
+  scp -r  ${TMP_JAVA}/*  root@${TARGET}:${JAVA_HOME}/
+  scp -r  root@${SRC}:${TOMCAT_HOME}/* ${TMP_TOMCAT}/
+  scp -r  ${TMP_TOMCAT}/* root@${TARGET}:${TOMCAT_HOME}/
+}
+
+function prepare_tomcat() {
+  ssh root@${TARGET} &quot;export TOMCAT_USER=tomcat ; \
+  export JAVA_HOME=${JAVA_HOME} ; \
+  cd ${APP_HOME} ; \
+  rm -rf logs/* temp/* webapps/* ; \
+  chown -R tomcat: ${APP_HOME} ${TOMCAT_HOME}&quot;
+}
+
+function init_service() {
+  ssh root@${TARGET} &quot;cat &lt;&lt; EOF &gt; /usr/lib/systemd/system/tomcat.service
+  [Unit]
+  Description=Apache Tomcat Web Application Container
+  After=syslog.target network.target
+  
+  [Service]
+  Type=forking
+  
+  Environment=JAVA_HOME=${JAVA_HOME}
+  Environment=CATALINA_PID=/usr/local/apps/tomcat/temp/tomcat.pid
+  Environment=CATALINA_HOME=${APP_HOME}
+  Environment=CATALINA_BASE=${APP_HOME}
+  Environment='JAVA_OPTS=-Djava.awt.headless=true -Djava.security.egd=file:/dev/./urandom'
+  Environment='ENV_TYPE=${ENV}'
+  
+  ExecStart=/usr/local/apps/tomcat/bin/startup.sh
+  ExecStop=/bin/kill -15 $MAINPID
+  
+  User=tomcat
+  Group=tomcat
+  
+  [Install]
+  WantedBy=multi-user.target
+  EOF&quot;
+  fi
+  
+  ssh root@${TARGET} &quot;systemctl daemon-reload &amp;&amp; systemctl enable tomcat.service&quot;
+}
+
+function is_ok() {
+  if [ $? -ne 0 ]; then
+    exit
+  else
+    continue
+  fi 
+}
+
+# 
+function clean() {
+  rm -rf /tmp/{java,ssl,tomcat,app}
+  shopt -u $TMP_APP $TMP_JAVA $TMP_SSL $TMP_TOMCAT
+}
+
+echo -e &quot;Vérification des paramètres de démarrage ...&quot;
+start_usage
+is_ok
+
+echo -e &quot;Initialisation des fichiers temporaires ...&quot;
+init_temp
+is_ok
+
+echo -e &quot;Copie des sources ...&quot;
+src_copy
+is_ok
+
+echo -e &quot;Préparation du tomcat sur la cible distante ...&quot;
+prepare_tomcat
+is_ok
+
+echo -e &quot;Initialisation du service tomcat ...&quot;
+init_service
+is_ok
+
+echo -e &quot;Nettoyage des répertoires et des variables temporaires ...&quot;
+clean
+is_ok
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="next" href="to_lower.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="next" href="to_lower.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        <script type="text/javascript">
+            var socket = new WebSocket("ws://localhost:3000/__livereload");
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+    </body>
+</html>

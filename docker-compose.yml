@@ -1,0 +1,52 @@
+version: "3"
+
+services:
+  server:
+    image: gitea/gitea:1.15.2-rootless
+    #environment:
+    #  - GITEA__database__DB_TYPE=postgres
+    #  - GITEA__database__HOST=db:5432
+    #  - GITEA__database__NAME=gitea
+    #  - GITEA__database__USER=gitea
+    #  - GITEA__database__PASSWD=gitea
+    #  - GITEA__mailer__FROM=${GITEA__mailer__FROM:?GITEA__mailer__FROM not set}
+    #  - GITEA__mailer__MAILER_TYPE=smtp
+    #  - GITEA__mailer__HOST=${GITEA__mailer__HOST:?GITEA__mailer__HOST not set}
+    #  - GITEA__mailer__IS_TLS_ENABLED=true
+    #  - GITEA__mailer__USER=${GITEA__mailer__USER:-apikey}
+    #  - GITEA__mailer__PASSWD="""${GITEA__mailer__PASSWD:?GITEA__mailer__PASSWD not set}"""
+    restart: always
+    volumes:
+      - ./data:/var/lib/gitea
+      - ./config:/etc/gitea  
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+      - "3000:3000"
+      - "2222:2222"
+    depends_on:
+      - db
+
+  db:
+    image: postgres:13
+    restart: always
+    environment:
+      - POSTGRES_USER=gitea
+      - POSTGRES_PASSWORD=gitea
+      - POSTGRES_DB=gitea
+    volumes:
+      - ./postgres:/var/lib/postgresql/data
+
+  #reverse-proxy:
+  #  # The official v2 Traefik docker image
+  #  image: traefik:v2.5
+  #  # Enables the web UI and tells Traefik to listen to docker
+  #  command: --api.insecure=true --providers.docker
+  #  ports:
+  #    # The HTTP port
+  #    - "80:80"
+  #    # The Web UI (enabled by --api.insecure=true)
+  #    - "8080:8080"
+  #  volumes:
+  #    # So that Traefik can listen to the Docker events
+  #    - /var/run/docker.sock:/var/run/docker.sock
