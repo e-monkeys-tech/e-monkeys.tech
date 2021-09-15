@@ -9,7 +9,7 @@ RUN apk update && \
     apk --no-cache add zola --repository http://dl-cdn.alpinelinux.org/alpine/edge/community/ && \
     rm /bin/sh && \
     ln -s /bin/bash /bin/sh && \
-    mkdir /opt/blog
+    mkdir -p /opt/blog/{static,templates,themes,sass} 
 
 COPY . /opt/blog
 
