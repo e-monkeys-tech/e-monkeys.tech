@@ -29,7 +29,7 @@ jobs:
         with:
           context: ./blog
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/e-monkeys-blog:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/e-monkeys-blog:2.0
       - name: docs.e-monkeys.tech Mdbook custom image build and push
         id: docker_build_blackarch_custom
         uses: docker/build-push-action@v2

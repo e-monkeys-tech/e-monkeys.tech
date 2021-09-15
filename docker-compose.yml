@@ -16,11 +16,11 @@ services:
     #  - GITEA__mailer__USER=${GITEA__mailer__USER:-apikey}
     #  - GITEA__mailer__PASSWD="""${GITEA__mailer__PASSWD:?GITEA__mailer__PASSWD not set}"""
     restart: always
-    volumes:
-      - ./data:/var/lib/gitea
-      - ./config:/etc/gitea  
-      - /etc/timezone:/etc/timezone:ro
-      - /etc/localtime:/etc/localtime:ro
+    volumes: []
+      #- ./data:/var/lib/gitea
+      #- ./config:/etc/gitea  
+      #- /etc/timezone:/etc/timezone:ro
+      #- /etc/localtime:/etc/localtime:ro
     ports:
       - "3000:3000"
       - "2222:2222"
@@ -49,13 +49,15 @@ services:
       - ./docs:/opt/data/docs
   # pbackz/e-monkeys-blog
   zola:
-    image: pbackz/e-monkeys-blog:latest
+    image: pbackz/e-monkeys-blog:2.0
     restart: always
-    command: -p 1111 --interface 0.0.0.0
+    command: --port 1111 --interface 0.0.0.0 
     ports:
       - '1111:1111'
+      - '10024:1024'
     expose:
       - '1111'
+      - '10024'
     volumes:
       - ./blog:/opt/data/blog
 
