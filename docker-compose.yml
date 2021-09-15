@@ -1,7 +1,7 @@
 version: "3"
 
 services:
-  server:
+  gitea:
     image: gitea/gitea:1.15.2-rootless
     environment:
       - GITEA__database__DB_TYPE=postgres
@@ -40,18 +40,24 @@ services:
   mdbook:
     image: pbackz/e-monkeys-docs:latest
     restart: always
+    command: mdbook serve -p 4000 -n 0.0.0.0
     ports:
-      - "3000:4000"
+      - '4000:4000'
+    expose: 
+      - '4000'
     volumes:
-      - ./docs:/opt/docs
-
+      - ./docs:/opt/data/docs
+  # pbackz/e-monkeys-blog
   zola:
     image: pbackz/e-monkeys-blog:latest
     restart: always
+    command: -p 1111 --interface 0.0.0.0
     ports:
-      - "1111:1111"
+      - '1111:1111'
+    expose:
+      - '1111'
     volumes:
-      - ./blog:/opt/blog
+      - ./blog:/opt/data/blog
 
   reverse-proxy:
     # The official v2 Traefik docker image

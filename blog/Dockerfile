@@ -15,4 +15,8 @@ COPY . /opt/blog
 
 WORKDIR /opt/blog
 
+RUN git init && \
+    git submodule add https://github.com/janbaudisch/zola-sam.git themes/sam && \
+    git submodule update --init --recursive
+
 ENTRYPOINT ["zola", "serve"]

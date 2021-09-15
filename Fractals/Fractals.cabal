@@ -7,14 +7,10 @@ license-file: ""
 copyright:
 maintainer:
 build-depends:
+    , base              ^>=4.12
+    , JuicyPixels       ^>=3.3.5
+    , Rasterific        ^>=0.7.5.4
 stability: experimental
-homepage:
-package-url:
-bug-reports:
-synopsis:
-description:
-category: CodingSample
-author: Gabriele Keller
 tested-with:
 data-files:
 data-dir: ""
@@ -22,7 +18,7 @@ extra-source-files:
 extra-tmp-files:
 extra-doc-files:
 Executable Fractals
-  main-is: Fractals.hs
+  main-is: app/Main.hs
   buildable: True
   build-tools:
   cpp-options:
