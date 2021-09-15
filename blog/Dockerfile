@@ -15,4 +15,4 @@ COPY . /opt/blog
 
 WORKDIR /opt/blog
 
-ENTRYPOINT ["bash"]
+ENTRYPOINT ["zola", "serve"]
