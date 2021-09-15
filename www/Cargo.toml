@@ -1,0 +1,19 @@
+[package]
+name = "e-monkeys"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+rocket = { version = "0.4.8", default-features = false }
+rocket_cors = { version = "0.5.1", default-features = false }
+serde = { version = "1.0.103", features = ["derive"] }
+serde_json = "1.0.44"
+rust-crypto = "0.2.36"
+chrono = { version = "0.4.10", features = ["serde"] }
+
+[dependencies.rocket_contrib]
+version = "0.4.10"
+default-features = true
+features = ["handlebars_templates", "tera_templates"]
